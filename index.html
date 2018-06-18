@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Crystal Collector</title>
+
+    <script type="text/javascript" src="main.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+</head>
+
+<body>
+
+    <h1>THE ULTIMATE GUSSING BLACK JACK!</h1>
+    <h2>pick a card, any card! Match the dealer's number by combining clicks on the four available cards. Be careful don't go over! </h2>
+        <h3>Cards will have a random value. The value does not change </h3>
+
+    <p id="resault"> </p>
+
+
+    <div class="crystals">
+
+    </div>
+
+    <p id = "current">Current number after you select a card</p>
+
+    <p id = "win">Games Won!</p>
+    <p id = "lost">Games lost!</p>
+
+</body>
+
+<script>
+    var random_resault;
+    var lost = 0;
+    var win = 0;
+    var previous = 0;
+
+    var resetStartGame = function () {
+
+        $(".crystals").empty();
+
+        random_resault = Math.floor(Math.random() * 69) + 30;
+
+        $("#resault").html('Random Resault: ' + random_resault)
+
+        for (var i = 0; i < 4; i++) {
+
+            var random = Math.floor(Math.random() * 11) + 1;
+
+
+            var crystal = $("<div> card </div>");
+            crystal.attr({
+                "class": 'crystal',
+                "data-random": random
+            });
+
+            $(".crystals").append(crystal);
+
+        }
+
+    }
+resetStartGame();
+
+
+
+    $(document).on('click', ".crystal", function () {
+
+        var num = parseInt($(this).attr('data-random'));
+
+        previous += num;
+
+        $("#current").html(previous);
+
+        if (previous > random_resault) {
+
+            lost--;
+
+            $("#lost").html(lost);
+
+            alert ("you lose!!!")
+
+            previous = 0; 
+
+            resetStartGame();
+
+        } else if (previous === random_resault) {
+            win++;
+
+            $("#win").html(win);
+
+            alert ("you win!!!")
+
+            previous = 0;
+
+             resetStartGame();
+        }
+
+    });
+
+</script>
+
+</html>
